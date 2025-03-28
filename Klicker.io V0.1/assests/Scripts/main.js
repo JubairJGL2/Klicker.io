@@ -13,6 +13,7 @@ const loginContainer = document.getElementById('login-container');
 const dotSize = document.getElementById('dotSize');
 const gameTime = document.getElementById('gameTime');
 const playGame = document.getElementById('play-game');
+const toggleSwitch = document.querySelector("body #toggleSwitch"); 
 function init() {
     retryBtn.style.display = "none";
     let randomized = "";
@@ -68,6 +69,33 @@ playGame.addEventListener('click', () => {
         floatingImg.style.transform = 'scale(0)';
     }, time.innerHTML * 1000);
 });
+function sound() {
+    let sou = new Audio("./assests/Sound/Klicker.mp3");
+    
+    sou.play().catch(error => console.error("Audio playback error:", error));
+}
+
+if (localStorage.getItem("checkboxState") === null) {
+    localStorage.setItem("checkboxState", "checked");
+}
+
+if (localStorage.getItem("checkboxState") === "checked") {
+    toggleSwitch.checked = true;
+    ;
+} else {
+    toggleSwitch.checked = false;
+   
+}
+toggleSwitch.addEventListener("change", function() {
+    if (toggleSwitch.checked) {
+        localStorage.setItem("checkboxState", "checked");
+        
+    } else {
+        localStorage.setItem("checkboxState", "unchecked");
+      
+    }
+});
+
 dot.addEventListener('click', () => {
     retryBtn.style.display = 'block';
     floatingImg.style.transform = 'scale(0)';
@@ -78,6 +106,11 @@ dot.addEventListener('click', () => {
     if (hero.style.display === 'flex') {
         score.innerHTML++;
     }
+    if (toggleSwitch.checked) {
+        
+        sound();
+    }
+    
 });
 retryBtn.addEventListener('click', () => {
     location.reload();
